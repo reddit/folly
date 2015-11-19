@@ -1,0 +1,35 @@
+Description: Downgrade gtest from 1.7.0 to 1.6.0
+ Ubuntu trusty only provides gtest-1.6.0. The newer version was required in
+ 6d079c1421885038d14a1f65e71c010836b6c94c for compatibility with OS X Yosemite
+ so it is safe to downgrade it for our purposes.
+Author:      Ricky Ramirez <rram@reddit.com>
+Last-Update: 2015-08-27
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/folly/test/Makefile.am
++++ b/folly/test/Makefile.am
+@@ -2,7 +2,7 @@
+ 
+ ACLOCAL_AMFLAGS = -I m4
+ 
+-CPPFLAGS += -Igtest-1.7.0/include
++CPPFLAGS += -Igtest-1.6.0/include
+ 
+ TESTS= \
+ 	sorted_vector_types_test \
+@@ -17,11 +17,11 @@
+ check_LTLIBRARIES = libgtestmain.la libgtest.la
+ check_PROGRAMS =
+ 
+-libgtestmain_la_CPPFLAGS = -Igtest-1.7.0 -Igtest-1.7.0/src
+-libgtestmain_la_SOURCES = gtest-1.7.0/src/gtest-all.cc gtest-1.7.0/src/gtest_main.cc
++libgtestmain_la_CPPFLAGS = -Igtest-1.6.0 -Igtest-1.6.0/src
++libgtestmain_la_SOURCES = gtest-1.6.0/src/gtest-all.cc gtest-1.6.0/src/gtest_main.cc
+ 
+-libgtest_la_CPPFLAGS = -Igtest-1.7.0 -Igtest-1.7.0/src
+-libgtest_la_SOURCES = gtest-1.7.0/src/gtest-all.cc
++libgtest_la_CPPFLAGS = -Igtest-1.6.0 -Igtest-1.6.0/src
++libgtest_la_SOURCES = gtest-1.6.0/src/gtest-all.cc
+ 
+ noinst_HEADERS = FBStringTestBenchmarks.cpp.h \
+ 		 FBVectorTestBenchmarks.cpp.h

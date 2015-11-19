@@ -1,0 +1,25 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+#
+#  Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+export CC = gcc-4.8
+export CXX = g++-4.8
+
+%:
+	dh $@ --with autoreconf --sourcedirectory=folly/
+
+override_dh_auto_configure:
+	dh_testdir
+	cp -rp /usr/src/gtest/ folly/test/
+	cp -rp /usr/include/gtest/ folly/test/
+	mv folly/test/gtest/ folly/test/gtest-1.6.0/
+	dh_auto_configure $@
+
+override_dh_auto_build:
+	dh_auto_build --parallel $@
+
+override_dh_auto_install:
+	dh_auto_install $@
+	cp -p folly/test/.libs/libgtest.a folly/test/.libs/libgtestmain.a debian/tmp/usr/lib/

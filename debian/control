@@ -1,0 +1,54 @@
+Source: folly
+Maintainer: Ricky Ramirez <rram@reddit.com>
+Section: libs
+Priority: extra
+Standards-Version: 3.9.5
+Build-Depends: debhelper (>= 9),
+ autoconf-archive,
+ automake,
+ dh-autoreconf,
+ gcc-4.8,
+ g++-4.8,
+ libboost1.54-dev,
+ libboost-context1.54-dev,
+ libboost-filesystem1.54-dev,
+ libboost-program-options1.54-dev,
+ libboost-python1.54-dev,
+ libboost-regex1.54-dev,
+ libboost-system1.54-dev,
+ libboost-thread1.54-dev,
+ libdouble-conversion-dev,
+ libevent-dev,
+ libgoogle-glog-dev,
+ libgflags-dev,
+ libgtest-dev,
+ libsnappy-dev,
+ libssl-dev,
+ libtool,
+ pkg-config,
+ python-dev
+
+Package: libfolly55
+Section: libs
+Architecture: amd64
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Facebook Open-source Library
+ Folly is an open-source C++ library developed and used at Facebook.
+ .
+ Folly is published on Github at https://github.com/facebook/folly; for
+ discussions, there is a Google group at
+ https://groups.google.com/d/forum/facebook-folly.
+
+Package: libfolly-dev
+Section: libdevel
+Architecture: amd64
+Depends: libfolly55 (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
+Description: Facebook Open-source Library
+ Folly is an open-source C++ library developed and used at Facebook.
+ .
+ Folly is published on Github at https://github.com/facebook/folly; for
+ discussions, there is a Google group at
+ https://groups.google.com/d/forum/facebook-folly.
+ .
+ This package contains static and debug libraries and header files for
+ developing applications.

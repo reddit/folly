@@ -1,0 +1,38 @@
+Building this package
+=====================
+This build process assumes you have cowbuilder and git-buildpackage.
+
+First you'll need to do some setup:
+```
+DISTRIBUTION=trusty cowbuilder --create
+git clone https://github.com/reddit/folly.git
+```
+
+If you already have the repo from a previous build, make sure it's up to date:
+```
+git checkout upstream
+git pull
+```
+
+Make a new release:
+```
+export RELEASE=0.55.0  # Replace this with the release number
+git checkout ubuntu/trusty
+git merge v$RELEASE
+dch -v $RELEASE-0reddit1
+# Update the control and install files; make any packaging changes necessary
+git commit -va -m 'Package release v$RELEASE'
+gbp buildpackage --git-pristine-tar --git-pristine-tar-commit --git-upstream-tag='v%(version)s' --git-pbuilder --git-dist=trusty --git-debian-branch=ubuntu/trusty
+```
+
+Test that the new package works. Once you're done, make a pull request.
+
+One day, jenkins will take it from here. Until then, push the final package out
+to the repo. To build a source package, you'll need to get the orig.tar.gz:
+```
+git checkout pristine-tar
+pristine-tar checkout folly_$RELEASE.orig.tar.gz
+mv folly_$RELEASE.orig.tar.gz ..
+git checkout ubuntu/trusty
+debuild -S
+```
